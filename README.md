@@ -1,5 +1,7 @@
 # ImmunOmics
 
+[![CI](https://github.com/pgrady1322/immunomics/actions/workflows/ci.yml/badge.svg)](https://github.com/pgrady1322/immunomics/actions/workflows/ci.yml)
+
 **Multi-omics integration of immune cell states from matched scRNA-seq + scATAC-seq data.**
 
 ImmunOmics integrates single-cell gene expression and chromatin accessibility to define immune cell states, link regulatory elements to target genes, and infer transcription factor activity across immune populations.
@@ -26,16 +28,28 @@ Single-modality analysis captures only part of the picture. ImmunOmics combines 
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/immunomics.git
+git clone https://github.com/pgrady1322/immunomics.git
 cd immunomics
+pip install -e ".[dev]"
+```
 
-# Create conda environment
+**With conda (full environment including R integration):**
+
+```bash
 conda env create -f env.yml
 conda activate immunomics
-
-# Install package in development mode
 pip install -e .
 ```
+
+**With ML backends (scvi-tools for MultiVI):**
+
+```bash
+pip install -e ".[ml]"
+```
+
+## Try It Now
+
+See [examples/multiomics_integration_demo.ipynb](examples/multiomics_integration_demo.ipynb) for a full walkthrough of preprocessing, differential analysis, TF activity inference, and visualization — runs entirely on synthetic data with no downloads required.
 
 ## Quick Start
 
@@ -69,35 +83,26 @@ immunomics/
 │   ├── __init__.py
 │   ├── cli.py                # Click CLI entry points
 │   ├── data/                 # Data loading and preprocessing
-│   │   ├── __init__.py
 │   │   ├── datasets.py       # 10x Multiome PBMC loader
 │   │   ├── preprocess_rna.py # scRNA-seq preprocessing
-│   │   └── preprocess_atac.py# scATAC-seq preprocessing
+│   │   └── preprocess_atac.py# scATAC-seq preprocessing (TF-IDF + LSI)
 │   ├── integration/          # Multi-omics integration methods
-│   │   ├── __init__.py
 │   │   ├── multivi.py        # MultiVI (scvi-tools)
 │   │   ├── wnn.py            # Weighted nearest neighbors (Seurat v5)
 │   │   ├── mofa.py           # MOFA+ multi-omics factor analysis
 │   │   └── benchmark.py      # Integration method comparison
 │   ├── analysis/             # Downstream analyses
-│   │   ├── __init__.py
 │   │   ├── peak_gene_links.py    # Enhancer-gene linkage
-│   │   ├── tf_activity.py        # TF activity via chromVAR
+│   │   ├── tf_activity.py        # TF activity via expression + chromVAR
 │   │   └── differential.py       # Differential accessibility/expression
 │   ├── visualization/        # Plotting functions
-│   │   ├── __init__.py
-│   │   └── plots.py          # Joint UMAP, heatmaps, genome tracks
+│   │   └── plots.py          # Joint UMAP, TF heatmaps, integration comparison
 │   └── utils/
-│       ├── __init__.py
-│       └── config.py
+│       └── config.py         # YAML configuration loader
 ├── configs/
 │   └── integration.yaml      # Default configuration
-├── notebooks/                 # Analysis notebooks
-│   ├── 01_data_loading.ipynb
-│   ├── 02_integration_comparison.ipynb
-│   ├── 03_peak_gene_analysis.ipynb
-│   └── 04_tf_activity.ipynb
-├── tests/
+├── tests/                     # 41 passing tests
+├── .github/workflows/ci.yml  # CI/CD (ruff + pytest)
 ├── env.yml
 ├── setup.py
 ├── pyproject.toml
@@ -131,6 +136,36 @@ Uses chromVAR to score TF motif accessibility per cell, then correlates with TF 
 
 ### Differential Analysis
 Identifies cell-type-specific peaks and genes, and tests for differential accessibility/expression between conditions.
+
+## CLI
+
+```bash
+# Download 10x Multiome PBMC dataset
+immunomics download --dataset multiome_pbmc_10k
+
+# Run integration with a specific method
+immunomics integrate --method multivi --config configs/integration.yaml
+
+# Benchmark all enabled integration methods
+immunomics benchmark --config configs/integration.yaml --output results/
+```
+
+## Methods
+
+ImmunOmics implements the complete multi-omics integration workflow:
+
+| Step | Module | Description |
+|---|---|---|
+| RNA preprocessing | `data.preprocess_rna` | QC → normalize → HVG (Seurat v3) → scale → PCA |
+| ATAC preprocessing | `data.preprocess_atac` | QC → peak selection → TF-IDF → LSI (truncated SVD) |
+| Integration | `integration.multivi` | Deep generative joint model (scvi-tools) |
+| Integration | `integration.wnn` | Weighted nearest neighbors (Seurat v5, via rpy2) |
+| Integration | `integration.mofa` | Multi-omics factor analysis (muon) |
+| Benchmarking | `integration.benchmark` | Silhouette score + ARI comparison |
+| Peak-gene links | `analysis.peak_gene_links` | Correlation-based enhancer-gene linkage with BH correction |
+| TF activity | `analysis.tf_activity` | Expression-based + chromVAR motif enrichment |
+| Differential | `analysis.differential` | Cell-type-specific DE genes and DA peaks |
+| Visualization | `visualization.plots` | Joint UMAP, TF heatmaps, peak-gene scatter, benchmarks |
 
 ## License
 

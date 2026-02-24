@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -12,7 +11,18 @@ License: MIT License - See LICENSE
 
 __version__ = "0.1.0"
 
-from immunomics import data, integration, analysis, visualization
+from immunomics import (
+    analysis as analysis,
+)
+from immunomics import (
+    data as data,
+)
+from immunomics import (
+    integration as integration,
+)
+from immunomics import (
+    visualization as visualization,
+)
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

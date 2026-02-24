@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,9 +10,7 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional
 
-import numpy as np
 import anndata as ad
 
 logger = logging.getLogger(__name__)
@@ -89,9 +86,7 @@ def run_mofa(
 
     adata_integrated.obsm["X_lsi"] = adata_atac.obsm.get("X_lsi", None)
     adata_integrated.uns["integration_method"] = "MOFA+"
-    adata_integrated.uns["mofa_variance_explained"] = mdata.uns.get(
-        "mofa_variance_explained", {}
-    )
+    adata_integrated.uns["mofa_variance_explained"] = mdata.uns.get("mofa_variance_explained", {})
 
     # Compute UMAP on MOFA factors
     if compute_umap and "X_mofa" in adata_integrated.obsm:
@@ -101,6 +96,7 @@ def run_mofa(
 
     logger.info("MOFA+ integration complete")
     return adata_integrated
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

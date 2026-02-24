@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,10 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional, Tuple
 
+import anndata as ad
 import numpy as np
 import pandas as pd
-import anndata as ad
 from scipy import stats
 
 logger = logging.getLogger(__name__)
@@ -27,7 +25,7 @@ def link_peaks_to_genes(
     max_distance: int = 500_000,
     min_correlation: float = 0.1,
     pvalue_threshold: float = 0.05,
-    gene_annotation: Optional[pd.DataFrame] = None,
+    gene_annotation: pd.DataFrame | None = None,
     n_jobs: int = -1,
 ) -> pd.DataFrame:
     """
@@ -79,7 +77,7 @@ def link_peaks_to_genes(
 
     # Find peak-gene pairs within distance
     pairs = _find_nearby_pairs(peak_coords, gene_annotation, max_distance)
-    logger.info(f"Found {len(pairs)} peak-gene pairs within {max_distance/1000:.0f}kb")
+    logger.info(f"Found {len(pairs)} peak-gene pairs within {max_distance / 1000:.0f}kb")
 
     if len(pairs) == 0:
         return pd.DataFrame(columns=["peak", "gene", "correlation", "pvalue", "distance", "chrom"])
@@ -115,14 +113,16 @@ def link_peaks_to_genes(
         r, p = stats.pearsonr(gene_expr.flatten(), peak_acc.flatten())
 
         if abs(r) >= min_correlation:
-            results.append({
-                "peak": peak,
-                "gene": gene,
-                "correlation": r,
-                "pvalue": p,
-                "distance": row["distance"],
-                "chrom": row["chrom"],
-            })
+            results.append(
+                {
+                    "peak": peak,
+                    "gene": gene,
+                    "correlation": r,
+                    "pvalue": p,
+                    "distance": row["distance"],
+                    "chrom": row["chrom"],
+                }
+            )
 
     df = pd.DataFrame(results)
 
@@ -147,13 +147,15 @@ def _parse_peaks(peak_names: list) -> pd.DataFrame:
     for name in peak_names:
         match = re.match(r"(chr\w+)[:\-](\d+)[:\-](\d+)", name)
         if match:
-            rows.append({
-                "peak": name,
-                "chrom": match.group(1),
-                "start": int(match.group(2)),
-                "end": int(match.group(3)),
-                "center": (int(match.group(2)) + int(match.group(3))) // 2,
-            })
+            rows.append(
+                {
+                    "peak": name,
+                    "chrom": match.group(1),
+                    "start": int(match.group(2)),
+                    "end": int(match.group(3)),
+                    "center": (int(match.group(2)) + int(match.group(3))) // 2,
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -213,6 +215,7 @@ def _find_nearby_pairs(
     if pairs:
         return pd.concat(pairs, ignore_index=True)
     return pd.DataFrame(columns=["peak", "gene", "distance", "chrom"])
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

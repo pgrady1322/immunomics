@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -10,9 +9,9 @@ Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
 License: MIT License - See LICENSE
 """
 
+from immunomics.analysis.differential import differential_genes, differential_peaks
 from immunomics.analysis.peak_gene_links import link_peaks_to_genes
 from immunomics.analysis.tf_activity import infer_tf_activity
-from immunomics.analysis.differential import differential_peaks, differential_genes
 
 __all__ = [
     "link_peaks_to_genes",

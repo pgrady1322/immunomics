@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,9 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional, List
 
-import numpy as np
-import pandas as pd
 import anndata as ad
+import pandas as pd
 import scanpy as sc
 
 logger = logging.getLogger(__name__)
@@ -87,6 +84,7 @@ def differential_peaks(
     logger.info(f"Found {len(result)} DA results across {adata_atac.obs[groupby].nunique()} groups")
 
     return result
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

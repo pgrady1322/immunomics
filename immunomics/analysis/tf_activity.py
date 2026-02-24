@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,10 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional, List
 
+import anndata as ad
 import numpy as np
 import pandas as pd
-import anndata as ad
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +31,7 @@ IMMUNE_TFS = {
 def infer_tf_activity(
     adata_rna: ad.AnnData,
     adata_atac: ad.AnnData,
-    tf_list: Optional[List[str]] = None,
+    tf_list: list[str] | None = None,
     cell_type_key: str = "cell_type",
     method: str = "correlation",
 ) -> pd.DataFrame:
@@ -87,7 +85,7 @@ def infer_tf_activity(
 
 def _expression_based_activity(
     adata_rna: ad.AnnData,
-    tf_list: List[str],
+    tf_list: list[str],
     cell_type_key: str,
 ) -> pd.DataFrame:
     """
@@ -116,16 +114,17 @@ def _expression_based_activity(
             mask = adata_rna.obs[cell_type_key] == ct
             tf_expr = X[mask, tf_idx]
 
-            results.append({
-                "tf_name": tf,
-                "cell_type": ct,
-                "mean_expression": float(np.mean(tf_expr)),
-                "pct_expressing": float(np.mean(tf_expr > 0) * 100),
-                "expression_zscore": float(
-                    (np.mean(tf_expr) - np.mean(X[:, tf_idx]))
-                    / (np.std(X[:, tf_idx]) + 1e-8)
-                ),
-            })
+            results.append(
+                {
+                    "tf_name": tf,
+                    "cell_type": ct,
+                    "mean_expression": float(np.mean(tf_expr)),
+                    "pct_expressing": float(np.mean(tf_expr > 0) * 100),
+                    "expression_zscore": float(
+                        (np.mean(tf_expr) - np.mean(X[:, tf_idx])) / (np.std(X[:, tf_idx]) + 1e-8)
+                    ),
+                }
+            )
 
     df = pd.DataFrame(results)
 
@@ -140,7 +139,7 @@ def _expression_based_activity(
 def _chromvar_activity(
     adata_rna: ad.AnnData,
     adata_atac: ad.AnnData,
-    tf_list: List[str],
+    tf_list: list[str],
     cell_type_key: str,
 ) -> pd.DataFrame:
     """
@@ -153,10 +152,9 @@ def _chromvar_activity(
     logger.info("Running chromVAR motif analysis via R...")
 
     try:
-        import rpy2.robjects as ro
         from rpy2.robjects.packages import importr
 
-        chromvar = importr("chromVAR")
+        importr("chromVAR")
         logger.info("chromVAR loaded successfully")
     except ImportError:
         logger.warning(
@@ -168,6 +166,7 @@ def _chromvar_activity(
     # Placeholder for full chromVAR implementation
     logger.info("Full chromVAR integration planned for v0.2")
     return _expression_based_activity(adata_rna, tf_list, cell_type_key)
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

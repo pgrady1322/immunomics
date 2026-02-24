@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,9 +10,7 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional, Dict, Any
 
-import numpy as np
 import anndata as ad
 
 logger = logging.getLogger(__name__)
@@ -27,7 +24,7 @@ def run_multivi(
     n_hidden: int = 256,
     max_epochs: int = 100,
     batch_size: int = 256,
-    batch_key: Optional[str] = None,
+    batch_key: str | None = None,
     n_neighbors: int = 20,
     compute_umap: bool = True,
 ) -> ad.AnnData:
@@ -61,9 +58,8 @@ def run_multivi(
     -------
     Integrated AnnData with shared latent space in obsm['X_multivi']
     """
-    import scvi
-    import muon as mu
     import scanpy as sc
+    import scvi
 
     logger.info(
         f"Running MultiVI integration: "
@@ -98,9 +94,9 @@ def run_multivi(
         adata_multi.layers["counts"] = sp.hstack([rna_counts, atac_counts]).tocsr()
 
     # Mark modality for each feature
-    adata_multi.var["modality"] = (
-        ["Gene Expression"] * adata_rna.n_vars + ["Peaks"] * adata_atac.n_vars
-    )
+    adata_multi.var["modality"] = ["Gene Expression"] * adata_rna.n_vars + [
+        "Peaks"
+    ] * adata_atac.n_vars
 
     # Setup MultiVI
     scvi.model.MULTIVI.setup_anndata(
@@ -143,6 +139,7 @@ def run_multivi(
     adata_multi.uns["multivi_model"] = {"n_latent": n_latent, "method": "MultiVI"}
 
     return adata_multi
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

@@ -35,16 +35,19 @@ setup(
         "pandas>=2.0",
         "scipy>=1.10",
         "scikit-learn>=1.3",
-        "scvi-tools>=1.0",
         "matplotlib>=3.7",
         "seaborn>=0.12",
         "pyyaml",
         "tqdm",
         "rich",
+        "statsmodels>=0.14",
+        "pybiomart>=0.2",
+        "scikit-misc>=0.3",
     ],
     extras_require={
+        "ml": ["scvi-tools>=1.0"],
         "r": ["rpy2>=3.5"],
-        "dev": ["pytest>=7.0", "pytest-cov", "black", "isort"],
+        "dev": ["pytest>=7.0", "pytest-cov", "ruff>=0.4"],
     },
     entry_points={
         "console_scripts": [

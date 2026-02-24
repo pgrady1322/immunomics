@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -12,10 +11,10 @@ License: MIT License - See LICENSE
 
 import logging
 import time
-from typing import Dict, Any, List, Optional
+from typing import Any
 
-import numpy as np
 import anndata as ad
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +22,9 @@ logger = logging.getLogger(__name__)
 def compare_methods(
     adata_rna: ad.AnnData,
     adata_atac: ad.AnnData,
-    methods: Optional[List[str]] = None,
-    label_key: Optional[str] = "cell_type",
-) -> Dict[str, Dict[str, Any]]:
+    methods: list[str] | None = None,
+    label_key: str | None = "cell_type",
+) -> dict[str, dict[str, Any]]:
     """
     Compare integration methods on the same data.
 
@@ -50,7 +49,7 @@ def compare_methods(
     -------
     Dictionary mapping method name to evaluation metrics
     """
-    from sklearn.metrics import silhouette_score, adjusted_rand_score
+    from sklearn.metrics import adjusted_rand_score, silhouette_score
 
     if methods is None:
         methods = ["multivi", "mofa"]  # WNN requires R, so optional
@@ -99,9 +98,7 @@ def compare_methods(
 
             # ARI between Leiden clusters and cell types
             if label_key in adata_int.obs.columns and "leiden" in adata_int.obs.columns:
-                ari = adjusted_rand_score(
-                    adata_int.obs[label_key], adata_int.obs["leiden"]
-                )
+                ari = adjusted_rand_score(adata_int.obs[label_key], adata_int.obs["leiden"])
                 metrics["adjusted_rand_index"] = ari
 
             results[method] = metrics
@@ -130,6 +127,7 @@ def _run_mofa_wrapper(adata_rna, adata_atac):
     from immunomics.integration.mofa import run_mofa
 
     return run_mofa(adata_rna, adata_atac)
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

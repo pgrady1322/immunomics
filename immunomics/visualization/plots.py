@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,9 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional, List, Dict
 
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 
 logger = logging.getLogger(__name__)
@@ -23,9 +20,9 @@ logger = logging.getLogger(__name__)
 
 def plot_joint_umap(
     adata,
-    color_keys: Optional[List[str]] = None,
+    color_keys: list[str] | None = None,
     figsize: tuple = (18, 5),
-    save_path: Optional[str] = None,
+    save_path: str | None = None,
 ) -> plt.Figure:
     """
     Plot joint UMAP colored by cell type, modality weights, etc.
@@ -55,7 +52,7 @@ def plot_joint_umap(
     if n_panels == 1:
         axes = [axes]
 
-    for ax, key in zip(axes, color_keys):
+    for ax, key in zip(axes, color_keys, strict=False):
         sc.pl.umap(adata, color=key, ax=ax, show=False, title=key)
 
     plt.suptitle("Multi-Omics Integrated UMAP", fontsize=14, y=1.02)
@@ -71,7 +68,7 @@ def plot_tf_heatmap(
     tf_activity: pd.DataFrame,
     top_n: int = 20,
     figsize: tuple = (12, 8),
-    save_path: Optional[str] = None,
+    save_path: str | None = None,
 ) -> plt.Figure:
     """
     Plot TF activity heatmap across cell types.
@@ -133,7 +130,7 @@ def plot_peak_gene_links(
     links: pd.DataFrame,
     top_n: int = 30,
     figsize: tuple = (10, 8),
-    save_path: Optional[str] = None,
+    save_path: str | None = None,
 ) -> plt.Figure:
     """
     Plot top peak-to-gene linkages.
@@ -186,10 +183,10 @@ def plot_peak_gene_links(
 
 
 def plot_integration_comparison(
-    results: Dict[str, Dict],
-    metrics: Optional[List[str]] = None,
+    results: dict[str, dict],
+    metrics: list[str] | None = None,
     figsize: tuple = (10, 6),
-    save_path: Optional[str] = None,
+    save_path: str | None = None,
 ) -> plt.Figure:
     """
     Compare integration methods side by side.
@@ -218,11 +215,13 @@ def plot_integration_comparison(
             continue
         for metric in metrics:
             if metric in method_results:
-                rows.append({
-                    "Method": method.upper(),
-                    "Metric": metric.replace("_", " ").title(),
-                    "Score": method_results[metric],
-                })
+                rows.append(
+                    {
+                        "Method": method.upper(),
+                        "Metric": metric.replace("_", " ").title(),
+                        "Score": method_results[metric],
+                    }
+                )
 
     df = pd.DataFrame(rows)
 
@@ -237,6 +236,7 @@ def plot_integration_comparison(
         fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
     return fig
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

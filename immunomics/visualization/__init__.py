@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,10 +10,10 @@ License: MIT License - See LICENSE
 """
 
 from immunomics.visualization.plots import (
-    plot_joint_umap,
-    plot_tf_heatmap,
-    plot_peak_gene_links,
     plot_integration_comparison,
+    plot_joint_umap,
+    plot_peak_gene_links,
+    plot_tf_heatmap,
 )
 
 __all__ = [

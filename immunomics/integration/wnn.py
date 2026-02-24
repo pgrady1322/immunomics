@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,10 +10,9 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional
 
-import numpy as np
 import anndata as ad
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +48,7 @@ def run_wnn(
 
     try:
         import rpy2.robjects as ro
-        from rpy2.robjects import pandas2ri, numpy2ri
+        from rpy2.robjects import numpy2ri, pandas2ri
         from rpy2.robjects.packages import importr
 
         pandas2ri.activate()
@@ -59,11 +57,11 @@ def run_wnn(
         raise ImportError(
             "WNN integration requires rpy2 and R packages: Seurat (v5+), Signac. "
             "Install with: conda install -c conda-forge rpy2 r-seurat r-signac"
-        )
+        ) from None
 
     # Import R packages
-    seurat = importr("Seurat")
-    base = importr("base")
+    importr("Seurat")
+    importr("base")
 
     # Ensure shared barcodes
     shared = adata_rna.obs_names.intersection(adata_atac.obs_names)
@@ -151,6 +149,7 @@ def run_wnn(
     )
 
     return adata_integrated
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.
