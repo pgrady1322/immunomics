@@ -19,11 +19,9 @@ Single-modality analysis captures only part of the picture. ImmunOmics combines 
 
 See [examples/multiomics_integration_demo.ipynb](examples/multiomics_integration_demo.ipynb) for a full walkthrough of preprocessing, differential analysis, TF activity inference, and visualization — runs entirely on PBMC-derived synthetic data with no downloads required.
 
-<p align="center">
-  <img src="assets/peak_gene_links.png" alt="Peak-to-Gene Regulatory Links" width="800">
-  <br>
-  <em>Correlation-based peak–gene regulatory links across 26 immune gene loci (synthetic PBMC data)</em>
-</p>
+![Peak-to-Gene Regulatory Links](assets/peak_gene_links.png)
+
+*Correlation-based peak–gene regulatory links across 26 immune gene loci (synthetic PBMC data)*
 
 ## Key Features
 
