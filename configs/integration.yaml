@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════════════
+# ImmunOmics — Integration Configuration
+# ═══════════════════════════════════════════════════════════════════════
+
+# Data
+data:
+  dataset: "multiome_pbmc_10k"
+  cache_dir: "~/.cache/immunomics/data"
+
+# RNA preprocessing
+rna_preprocessing:
+  min_genes: 200
+  min_cells: 3
+  max_pct_mito: 20.0
+  n_top_genes: 3000
+  target_sum: 10000
+  n_pcs: 50
+
+# ATAC preprocessing
+atac_preprocessing:
+  min_peaks: 500
+  min_cells: 5
+  n_top_peaks: 50000
+  n_components: 50
+
+# Integration methods
+integration:
+  multivi:
+    enabled: true
+    n_latent: 20
+    n_layers: 2
+    n_hidden: 256
+    max_epochs: 100
+    batch_size: 256
+
+  wnn:
+    enabled: false  # Requires R + Seurat v5
+    n_neighbors: 20
+
+  mofa:
+    enabled: true
+    n_factors: 15
+    max_iterations: 1000
+    convergence_mode: "medium"
+
+# Downstream analysis
+analysis:
+  peak_gene_links:
+    max_distance: 500000
+    min_correlation: 0.1
+    pvalue_threshold: 0.05
+
+  tf_activity:
+    method: "expression"  # or "chromvar" (requires R)
+
+  differential:
+    method: "wilcoxon"
+    n_genes: 100
+    n_peaks: 500
+
+# Output
+output:
+  dir: "results"
+  save_plots: true
+  plot_format: "png"
