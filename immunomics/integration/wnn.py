@@ -1,12 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Weighted Nearest Neighbor (WNN) integration via Seurat v5.
+ImmunOmics v0.1.0
 
-WNN (Hao et al. 2021, Cell) builds modality-specific KNN graphs
-and computes per-cell weights for each modality, creating a
-weighted combination that captures the most informative modality
-for each cell.
+Weighted Nearest Neighbor integration via rpy2 + Seurat v5.
 
-This implementation wraps R's Seurat v5 WNN via rpy2.
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -150,3 +151,6 @@ def run_wnn(
     )
 
     return adata_integrated
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

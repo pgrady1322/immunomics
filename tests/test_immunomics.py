@@ -1,5 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Tests for ImmunOmics.
+ImmunOmics v0.1.0
+
+Unit tests for integration and analysis modules.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import pytest
@@ -77,3 +85,6 @@ class TestDifferential:
         result = differential_genes(mock_rna, groupby="cell_type", n_genes=5)
         assert len(result) > 0
         assert "names" in result.columns or "group" in result.columns
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

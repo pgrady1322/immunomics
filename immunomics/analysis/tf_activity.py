@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Transcription factor activity inference.
+ImmunOmics v0.1.0
 
-Combines chromVAR motif enrichment scores with TF expression
-to infer transcription factor activity per cell and per cell type.
+Transcription factor activity inference for immune cells.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -163,3 +168,6 @@ def _chromvar_activity(
     # Placeholder for full chromVAR implementation
     logger.info("Full chromVAR integration planned for v0.2")
     return _expression_based_activity(adata_rna, tf_list, cell_type_key)
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

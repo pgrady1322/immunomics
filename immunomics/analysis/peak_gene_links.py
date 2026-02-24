@@ -1,9 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Peak-to-gene linkage analysis.
+ImmunOmics v0.1.0
 
-Links scATAC-seq peaks to putative target genes by correlating
-peak accessibility with gene expression across cells. This
-identifies cell-type-specific regulatory elements.
+Correlation-based peak-to-gene linkage analysis.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -209,3 +213,6 @@ def _find_nearby_pairs(
     if pairs:
         return pd.concat(pairs, ignore_index=True)
     return pd.DataFrame(columns=["peak", "gene", "distance", "chrom"])
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

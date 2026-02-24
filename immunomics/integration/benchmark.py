@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Integration method benchmarking.
+ImmunOmics v0.1.0
 
-Systematically compare MultiVI, WNN, and MOFA+ on the same
-dataset using biological and computational metrics.
+Integration method comparison (silhouette, ARI).
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -125,3 +130,6 @@ def _run_mofa_wrapper(adata_rna, adata_atac):
     from immunomics.integration.mofa import run_mofa
 
     return run_mofa(adata_rna, adata_atac)
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

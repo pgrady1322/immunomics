@@ -1,4 +1,14 @@
-"""YAML configuration handling."""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ImmunOmics v0.1.0
+
+YAML configuration loader and validation.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
+"""
 
 import logging
 from pathlib import Path
@@ -20,3 +30,6 @@ def load_config(path: str) -> Dict[str, Any]:
 
     logger.info(f"Loaded config from {path}")
     return config
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

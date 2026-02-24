@@ -1,15 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-MOFA+ integration — Multi-Omics Factor Analysis.
+ImmunOmics v0.1.0
 
-MOFA+ (Argelaguet et al. 2020, Genome Biology) identifies shared
-and modality-specific sources of variation through Bayesian factor
-analysis. Each factor captures a pattern of co-variation across
-RNA and ATAC modalities.
+MOFA+ multi-omics factor analysis via muon.
 
-Advantages:
-- Interpretable factors (each explains a source of variation)
-- Identifies modality-specific vs shared variation
-- Handles missing data and unequal feature counts
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -103,3 +101,6 @@ def run_mofa(
 
     logger.info("MOFA+ integration complete")
     return adata_integrated
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

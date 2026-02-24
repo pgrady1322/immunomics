@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Publication-quality visualizations for multi-omics immune analysis.
+ImmunOmics v0.1.0
 
-Includes joint UMAP plots, TF activity heatmaps, peak-gene link
-visualization, and integration method comparison.
+Joint UMAP, TF heatmap, and peak-gene link visualizations.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -232,3 +237,6 @@ def plot_integration_comparison(
         fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
     return fig
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Differential accessibility and expression analysis.
+ImmunOmics v0.1.0
 
-Identifies cell-type-specific peaks and genes, and tests
-for differential accessibility/expression between conditions.
+Differential peak and gene expression analysis.
+
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -82,3 +87,6 @@ def differential_peaks(
     logger.info(f"Found {len(result)} DA results across {adata_atac.obs[groupby].nunique()} groups")
 
     return result
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.

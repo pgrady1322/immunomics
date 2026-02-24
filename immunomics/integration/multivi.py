@@ -1,16 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-MultiVI integration — deep generative model for RNA + ATAC.
+ImmunOmics v0.1.0
 
-MultiVI (Ashuach et al. 2023, Nature Methods) jointly models
-scRNA-seq and scATAC-seq data using a variational autoencoder.
-It learns a shared latent space while modeling modality-specific
-noise distributions.
+MultiVI joint RNA+ATAC integration via scvi-tools.
 
-Advantages:
-- Probabilistic framework handles dropout and noise
-- Can integrate data with missing modalities
-- Batch correction built-in
-- Scalable to large datasets
+Author: Patrick Grady
+Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
+License: MIT License - See LICENSE
 """
 
 import logging
@@ -146,3 +143,6 @@ def run_multivi(
     adata_multi.uns["multivi_model"] = {"n_latent": n_latent, "method": "MultiVI"}
 
     return adata_multi
+
+# ImmunOmics v0.1.0
+# Any usage is subject to this software's license.
