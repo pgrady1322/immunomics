@@ -13,7 +13,7 @@ import logging
 
 import click
 
-from immunomics import __version__
+from . import __version__
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ def main(verbose):
 @click.option("--output", "-o", default=None, help="Output directory")
 def download(dataset, output):
     """Download multi-omics dataset."""
-    from immunomics.data.datasets import load_multiome_pbmc
+    from .data.datasets import load_multiome_pbmc
 
     click.echo(f"Downloading {dataset}...")
     adata_rna, adata_atac = load_multiome_pbmc(cache_dir=output)
@@ -54,10 +54,10 @@ def integrate(config, method, output):
     """Run multi-omics integration."""
     from pathlib import Path
 
-    from immunomics.data.datasets import load_multiome_pbmc
-    from immunomics.data.preprocess_atac import preprocess_atac
-    from immunomics.data.preprocess_rna import preprocess_rna
-    from immunomics.utils.config import load_config
+    from .data.datasets import load_multiome_pbmc
+    from .data.preprocess_atac import preprocess_atac
+    from .data.preprocess_rna import preprocess_rna
+    from .utils.config import load_config
 
     cfg = load_config(config)
     click.echo(f"Running {method} integration...")
@@ -99,11 +99,11 @@ def benchmark(config, output):
     """Compare all integration methods."""
     from pathlib import Path
 
-    from immunomics.data.datasets import load_multiome_pbmc
-    from immunomics.data.preprocess_atac import preprocess_atac
-    from immunomics.data.preprocess_rna import preprocess_rna
-    from immunomics.integration.benchmark import compare_methods
-    from immunomics.utils.config import load_config
+    from .data.datasets import load_multiome_pbmc
+    from .data.preprocess_atac import preprocess_atac
+    from .data.preprocess_rna import preprocess_rna
+    from .integration.benchmark import compare_methods
+    from .utils.config import load_config
 
     cfg = load_config(config)
     click.echo("Running integration benchmark...")

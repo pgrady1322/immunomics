@@ -11,18 +11,10 @@ License: MIT License - See LICENSE
 
 __version__ = "0.1.0"
 
-from immunomics import (
-    analysis as analysis,
-)
-from immunomics import (
-    data as data,
-)
-from immunomics import (
-    integration as integration,
-)
-from immunomics import (
-    visualization as visualization,
-)
+from . import analysis as analysis
+from . import data as data
+from . import integration as integration
+from . import visualization as visualization
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

@@ -9,7 +9,7 @@ Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
 License: MIT License - See LICENSE
 """
 
-from immunomics.visualization.plots import (
+from .plots import (
     plot_integration_comparison,
     plot_joint_umap,
     plot_peak_gene_links,

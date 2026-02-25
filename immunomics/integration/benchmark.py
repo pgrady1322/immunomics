@@ -112,19 +112,19 @@ def compare_methods(
 
 
 def _run_multivi_wrapper(adata_rna, adata_atac):
-    from immunomics.integration.multivi import run_multivi
+    from .multivi import run_multivi
 
     return run_multivi(adata_rna, adata_atac)
 
 
 def _run_wnn_wrapper(adata_rna, adata_atac):
-    from immunomics.integration.wnn import run_wnn
+    from .wnn import run_wnn
 
     return run_wnn(adata_rna, adata_atac)
 
 
 def _run_mofa_wrapper(adata_rna, adata_atac):
-    from immunomics.integration.mofa import run_mofa
+    from .mofa import run_mofa
 
     return run_mofa(adata_rna, adata_atac)
 

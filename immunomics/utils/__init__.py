@@ -9,7 +9,7 @@ Anthropic Claude Opus 4.6 used for code formatting and cleanup assistance.
 License: MIT License - See LICENSE
 """
 
-from immunomics.utils.config import load_config
+from .config import load_config
 
 __all__ = ["load_config"]
 
