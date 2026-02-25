@@ -11,10 +11,17 @@ License: MIT License - See LICENSE
 
 __version__ = "0.1.0"
 
-from . import analysis as analysis
-from . import data as data
-from . import integration as integration
-from . import visualization as visualization
+__all__ = ["analysis", "data", "integration", "visualization"]
+
+
+def __getattr__(name: str):
+    """Lazy-import subpackages to avoid circular-import errors in CI."""
+    if name in __all__:
+        import importlib
+
+        return importlib.import_module(f".{name}", __name__)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.
