@@ -20,6 +20,9 @@ jobs:
       matrix:
         python-version: ["3.11"]
 
+    env:
+      MPLBACKEND: Agg
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +36,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
+      - name: Show dependency versions
+        run: |
+          python -c "import scanpy; print('scanpy', scanpy.__version__)"
+          python -c "import anndata; print('anndata', anndata.__version__)"
+          python -c "import numpy; print('numpy', numpy.__version__)"
+
       - name: Lint with ruff
         run: |
           ruff check immunomics/ tests/
@@ -43,4 +52,4 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=long
