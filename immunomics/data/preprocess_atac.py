@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,10 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional
 
+import anndata as ad
 import numpy as np
 import scanpy as sc
-import anndata as ad
 
 logger = logging.getLogger(__name__)
 
@@ -141,13 +139,9 @@ def _run_lsi(adata: ad.AnnData, n_components: int = 50) -> ad.AnnData:
     and is excluded from downstream analysis.
     """
     from sklearn.decomposition import TruncatedSVD
-    import scipy.sparse as sp
 
     X = adata.X
-    if sp.issparse(X):
-        X_dense = X
-    else:
-        X_dense = X
+    X_dense = X
 
     svd = TruncatedSVD(n_components=n_components + 1, random_state=42)
     lsi = svd.fit_transform(X_dense)
@@ -189,6 +183,7 @@ def parse_peak_coordinates(adata: ad.AnnData) -> ad.AnnData:
     adata.var["end"] = ends
 
     return adata
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

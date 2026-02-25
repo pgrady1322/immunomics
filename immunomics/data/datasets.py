@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -12,7 +11,6 @@ License: MIT License - See LICENSE
 
 import logging
 from pathlib import Path
-from typing import Optional, Tuple
 
 import anndata as ad
 
@@ -38,9 +36,9 @@ def _ensure_cache_dir() -> Path:
 
 
 def load_multiome_pbmc(
-    cache_dir: Optional[str] = None,
+    cache_dir: str | None = None,
     force_download: bool = False,
-) -> Tuple[ad.AnnData, ad.AnnData]:
+) -> tuple[ad.AnnData, ad.AnnData]:
     """
     Load 10x Genomics Multiome PBMC dataset.
 
@@ -118,6 +116,7 @@ def load_multiome_pbmc(
     logger.info(f"Saved to {mdata_path}")
 
     return adata_rna, adata_atac
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.

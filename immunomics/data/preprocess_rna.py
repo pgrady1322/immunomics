@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ImmunOmics v0.1.0
 
@@ -11,11 +10,9 @@ License: MIT License - See LICENSE
 """
 
 import logging
-from typing import Optional
 
-import numpy as np
-import scanpy as sc
 import anndata as ad
+import scanpy as sc
 
 logger = logging.getLogger(__name__)
 
@@ -104,6 +101,7 @@ def preprocess_rna(
 
     logger.info(f"RNA preprocessing complete: {adata.n_obs} cells, {n_pcs} PCs")
     return adata
+
 
 # ImmunOmics v0.1.0
 # Any usage is subject to this software's license.
